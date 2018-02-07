@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>PREVIEW</title>
+
+
+	<script src="js/jquery-1.11.3.js"></script>
+	<script src="js/three.min.js"></script>
+	<script src="js/CTMLoader.js"></script>
+	<script src="js/OrbitControls.js"></script>
+	<script src="js/glassJSON.js"></script>
+	<script src="js/lzma.js"></script>
+	<script src="js/ctm.js"></script>
+	<style>
+	body{
+		margin:0px;
+		overflow: hidden;
+	}
+		#controls{
+		
+			position:absolute;	
+			width:200px;
+			height:40px;
+			z-index:5;
+			top:520px;
+			left:750px;
+		}
+		#rotation img{
+			position:absolute;
+			width:32px;
+			height:32px;
+			cursor:pointer;
+		}
+		#play img{
+			position:absolute;
+			margin-left:50px;
+			width:32px;
+			height:32px;
+			cursor:pointer;
+		}
+		#plus img{
+			position:absolute;
+			margin-left:100px;
+			width:32px;
+			height:32px;
+			cursor:pointer;
+		}
+		#minus img{
+			position:absolute;
+			margin-left:150px;
+			width:32px;
+			height:32px;
+			cursor:pointer;
+		}
+		#canvas{
+			position:absolute;
+			margin-top:0px;
+			margin-left:0px;
+			height:100%;
+			width:100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="panelThree">
+							
+								<div id="controls">							
+									<div id="rotation" onclick="cameraReset();">
+										<img src="icons/ROTATION.jpg"></img>
+									</div>
+										<div id="play" onclick="clickAnim();">
+											<img src="icons/PLAY.jpg"></img>
+										</div>
+											<div id="plus" onclick="camIn();">
+												<img src="icons/PLUS.jpg"></img>
+											</div>
+												<div id="minus" onclick="camOut();">
+													<img src="icons/MINUS.jpg"></img>
+												</div>
+										
+							</div>
+								<div id="canvas">
+								</div>
+						</div>
+</body>
+<script src="js/preview.js"></script>
+</html>

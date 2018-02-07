@@ -1,0 +1,681 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>ASSA ABLOY</title>
+	<link rel="stylesheet" type="text/css" href="css/design.css">
+	<script src="js/fabric.min.js"></script>
+	<script src="js/jquery-1.11.3.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/three.min.js"></script>
+	<script src="js/CTMLoader.js"></script>
+	<script src="js/OrbitControls.js"></script>
+	<script src="js/glassJSON.js"></script>
+	<script src="js/lzma.js"></script>
+	<script src="js/ctm.js"></script>
+</head>
+<body>
+<script>
+	$(document).ready(function () {
+		$('.borderClass').click(function () {
+			$('.borderClass').removeClass('active');
+				$(this).addClass('active');
+		});
+});	
+</script>
+<div id="container">
+	<div id="innerContainer">
+		<div id="headerDiv">
+			<div id="nameDiv">
+				<h3>ASSA ABLOY</h3>
+					<div id="nameSpace">
+					</div>
+						<h4>PRO-TECH</h4>
+			</div>
+			<div id="contactUs">
+				<p><b>Welcome Valerie Cesario</b> | Profile | Help | Contact Us</p>
+			</div>
+		</div>
+			<div id="headerDownDiv">
+				<div id="titleOne">
+					<ul>
+						<li>Home</li>
+						<li>Projects</li>
+						<li>Utility</li>
+						<li>Libraries</li>
+						<li>Project Mgmnt</li>
+						<li>Quick Pick</li>
+						<li><b>Milano Travel</b></li>
+					</ul>
+				</div>
+					<div id="border">
+					</div>
+						<div id="titleTwo">
+							<ul>
+								<li>Openings &ensp;|</li>
+								<li>Proposals &ensp;|</li>
+								<li>Orders &ensp;|</li>
+								<li>Shipments &ensp;|</li>
+								<li><b>Confiqurator &ensp;|</b></li>
+								<li>Reports &ensp;|</li>
+								<li>Admin &ensp;|</li>
+							</ul>
+						</div>
+							<div id="buttonDiv">
+								<div id="milanoTravel">
+									<p>Milano Travel</p>
+								</div>
+									<div id="current">
+										<p>Current</p>
+									</div>
+							</div>
+			</div>
+				<div id="panelOne">
+					<div id="oneHeadingDiv">
+						<p>Components</p>
+					</div>
+						<div id="oneMidDiv">
+							<img src="icons/glass-Icon.jpg"></img>
+						</div>
+							<div id="oneImgDiv">
+								<div id="ADiv_A" class="borderClass" onclick="glassChange(this.id);addA();">
+									<p>A</p>
+									<img src="icons/A-Icon.png"></img>
+								</div>
+									<div id="BDiv_B" class="borderClass" onclick="metalChange(this.id);addB();">
+										<p>B</p>
+										<img src="icons/B-Icon.png"></img>
+									</div>
+										<div id="CDiv_C" class="borderClass" onclick="glassChange(this.id);addC();">
+											<p>C</p>
+											<img src="icons/C-Icon.png" ></img>
+										</div>
+											<div id="DDiv_D" class="borderClass" onclick="glassChange(this.id);addD();">
+												<p>D</p>
+												<img src="icons/D-Icon.png"></img>
+											</div>
+							</div>
+				</div>
+					<div id="panelTwo">
+						<button onclick="add_hardware()" >Add Hardware</button>
+							<div id="rightMarker">
+								<p>90&deg;</p>
+									<img src="icons/side-marker.png"></img>
+						</div>
+							<div id="leftMarker">
+								<p>180&deg;</p>
+									<img src="icons/side-marker.png"></img>
+						</div>
+							<div id="confiqDiv">
+								<canvas id="c" width="450"height="350"></canvas>
+							</div>
+								<div id="textArea">
+									<textarea rows="4" cols="90" name="comment" form="usrform"> PROPERTIES</textarea>
+								</div>
+					</div>
+						<div id="panelThree">
+							<div id="expand" onclick="expand();">
+									<img src="icons/EXPAND.jpg"></img>
+							</div>
+								<div id="controls">							
+									<div id="rotation" onclick="cameraReset();">
+										<img src="icons/ROTATION.jpg"></img>
+									</div>
+										<div id="play" onclick="clickAnim();">
+											<img src="icons/PLAY.jpg"></img>
+										</div>
+											<div id="plus" onclick="camIn();">
+												<img src="icons/PLUS.jpg"></img>
+											</div>
+												<div id="minus" onclick="camOut();">
+													<img src="icons/MINUS.jpg"></img>
+												</div>
+										
+							</div>
+								<div id="threeCanvas">
+								</div>
+						</div>
+	</div>
+</div>
+<script src="js/glass1.js"></script>
+
+<script>
+var canvas =new fabric.Canvas('c');
+//canvas.backgroundColor = 'rgba(0,0,255,0.3)';
+/*
+var path = new fabric.Path('M 0 0 L 200 100 L 170 200 z');
+path.set({ left: 120, top: 120 });
+canvas.add(path);*/
+/*------- AICON------------*/
+var firts_pointleft=($('.lower-canvas').innerWidth()/2)-((40*3)/2);
+var first_pointtop_A_D = ($('.lower-canvas').innerHeight()/2)-((50*3)/2);
+var first_pointTop_C_B = ($('.lower-canvas').innerHeight()/2)-((80*3)/2);
+
+		var points1, points2, points3, points4, points5, points6;
+		var glassC_old_points1_left=firts_pointleft, glassC_old_points2_left=firts_pointleft, glassC_old_points3_left=firts_pointleft+48, glassC_old_points4_left=firts_pointleft+48, glassC_old_points5_left=firts_pointleft+120, glassC_old_points6_left=firts_pointleft+120,
+				glassC_old_points1_top=first_pointTop_C_B, glassC_old_points2_top=first_pointTop_C_B+240, glassC_old_points3_top=first_pointTop_C_B+240, glassC_old_points4_top=first_pointTop_C_B+150, glassC_old_points5_top=first_pointTop_C_B+150, glassC_old_points6_top=first_pointTop_C_B;
+
+		var glassA_old_points1_left=firts_pointleft, glassA_old_points2_left=firts_pointleft, glassA_old_points5_left=firts_pointleft+120, glassA_old_points6_left=firts_pointleft+120,
+				glassA_old_points1_top=first_pointtop_A_D, glassA_old_points2_top=first_pointtop_A_D+150, glassA_old_points5_top=first_pointtop_A_D+150, glassA_old_points6_top=first_pointtop_A_D;
+
+		var glassB_old_points1_left=firts_pointleft, glassB_old_points2_left=firts_pointleft, glassB_old_points5_left=firts_pointleft+120, glassB_old_points6_left=firts_pointleft+120,
+				glassB_old_points1_top=first_pointTop_C_B, glassB_old_points2_top=first_pointTop_C_B+240, glassB_old_points5_top=first_pointTop_C_B+240, glassB_old_points6_top=first_pointTop_C_B;
+
+		var glassD_old_points1_left=firts_pointleft, glassD_old_points2_left=firts_pointleft, glassD_old_points5_left=firts_pointleft+120, glassD_old_points6_left=firts_pointleft+120,
+				glassD_old_points1_top=first_pointtop_A_D, glassD_old_points2_top=first_pointtop_A_D+150, glassD_old_points5_top=first_pointtop_A_D+150, glassD_old_points6_top=first_pointtop_A_D;
+		var line,line1,line2,line3,line4,line5;
+		var text, text1, text2, text3, text4, text5;
+
+var Polygon;
+		var test_part_c=false, test_part_A=false, test_part_B=false, test_part_D=false;
+		var AIcon = new fabric.Rect({
+			left:145,
+			top:40,
+			fill:'#93d2ca',
+			 borderColor: '#636d7c',
+			cornerColor: '#a9abad',
+			lockRotation: true,
+			lockMovementX:true,
+			lockMovementY:true,
+			cornerSize: 10,
+			transparentCorners: false,
+			width:150,
+			height:190
+		});
+		AIcon.setControlsVisibility({
+			//ml: false, 
+		//mr: false, 
+			bl: false,
+			br: false,
+			tl: false,
+			tr: false,
+			//mt: false,
+			//mb: false,
+			mtr:false,
+		});
+		/*---------BICON-------------*/
+		var BIcon = new fabric.Rect({
+			left:145,
+			top:40,
+			fill:'#93d2ca',
+			 borderColor: '#636d7c',
+			cornerColor: '#a9abad',
+			lockRotation: true,
+			lockMovementX:true,
+			lockMovementY:true,
+			cornerSize: 10,
+			transparentCorners: false,
+			width:150,
+			height:270
+		});
+		BIcon.setControlsVisibility({
+			//ml: false, 
+		//mr: false, 
+			bl: false,
+			br: false,
+			tl: false,
+			tr: false,
+			//mt: false,
+			//mb: false,
+			mtr:false,
+		});
+
+
+
+		// addC();
+
+
+		function addD(){
+			test_part_c=false;
+			test_part_A=false;
+			test_part_B=false;
+			test_part_D=true;
+			removePoints();
+			canvas.remove(Polygon);
+			canvas.remove(text, text1, text2, text3, text4, text5);
+			canvas.remove(line,line1,line2,line3,line4,line5);
+			line = makeLine([ glassD_old_points1_left-20, glassD_old_points1_top+3, glassD_old_points2_left-20, glassD_old_points2_top+3 ]);
+			var dist=distance_entre_deux_points(glassD_old_points1_left,glassD_old_points2_left,glassD_old_points1_top,glassD_old_points2_top)+"";
+			text=addText(dist,distance(glassD_old_points1_left, glassD_old_points2_left)-30,distance(glassD_old_points1_top, glassD_old_points2_top)-10);
+			line1 = makeLine([ glassD_old_points2_left+3, glassD_old_points2_top+20, glassD_old_points5_left+3, glassD_old_points5_top+20 ]);
+			var dist1=distance_entre_deux_points(glassD_old_points2_left,glassD_old_points5_left,glassD_old_points2_top,glassD_old_points5_top)+"";
+			text1=addText(dist1,distance(glassD_old_points2_left, glassD_old_points5_left)-10,distance(glassD_old_points2_top, glassD_old_points5_top)+15);
+
+			var dist4=distance_entre_deux_points(glassD_old_points5_left,glassD_old_points6_left,glassD_old_points5_top,glassD_old_points6_top)+"";
+			line4 = makeLine([ glassD_old_points5_left+20, glassD_old_points5_top+3, glassD_old_points6_left+20, glassD_old_points6_top+3 ]);
+			text4=addText(dist4,distance(glassD_old_points5_left, glassD_old_points6_left)+10,distance(glassD_old_points5_top, glassD_old_points6_top));
+
+			var dist5=distance_entre_deux_points(glassD_old_points6_left,glassD_old_points1_left,glassD_old_points6_top,glassD_old_points1_top)+"";
+			line5 = makeLine([ glassD_old_points6_left+3, glassD_old_points6_top-20, glassD_old_points1_left+3, glassD_old_points1_top-20 ]);
+			text5=addText(dist5,distance(glassD_old_points6_left, glassD_old_points1_left),distance(glassD_old_points6_top, glassD_old_points1_top)-25);
+			canvas.add(line,line1,line4,line5);
+			canvas.add(text, text1, text4, text5);
+			points1 = makeCircle(glassD_old_points1_left, glassD_old_points1_top, line,line1,null,null, line4,line5 );
+			points2 =    makeCircle(glassD_old_points2_left, glassD_old_points2_top, line,line1,null,null, line4,line5);
+			points5 =    makeCircle(glassD_old_points5_left,  glassD_old_points5_top, line,line1,null,null, line4,line5 );
+			points6 =   makeCircle(glassD_old_points6_left, glassD_old_points6_top, line,line1,null,null, line4,line5);
+			Polygon = addRectangleA_D_B(points1.left+3,points1.top+3,points2.left+3,points2.top+3,points5.left+3,points5.top+3,points6.left+3,points6.top+3);
+			canvas.add(Polygon);
+			canvas.add(
+					points1,
+					points2,
+					points5,
+					points6
+			);
+
+
+		}
+
+		function addA(){
+			test_part_c=false;
+			test_part_A=true;
+			test_part_B=false;
+			test_part_D=false;
+			canvas.remove(text, text1, text2, text3, text4, text5);
+			canvas.remove(line,line1,line2,line3,line4,line5);
+			line = makeLine([ glassA_old_points1_left-20, glassA_old_points1_top+3, glassA_old_points2_left-20, glassA_old_points2_top+3 ]);
+			var dist=distance_entre_deux_points(glassA_old_points1_left,glassA_old_points2_left,glassA_old_points1_top,glassA_old_points2_top)+"";
+			text=addText(dist,distance(glassA_old_points1_left, glassA_old_points2_left)-30,distance(glassA_old_points1_top, glassA_old_points2_top)-10);
+			line1 = makeLine([ glassA_old_points2_left+3, glassA_old_points2_top+20, glassA_old_points5_left+3, glassA_old_points5_top+20 ]);
+			var dist1=distance_entre_deux_points(glassA_old_points2_left,glassA_old_points5_left,glassA_old_points2_top,glassA_old_points5_top)+"";
+			text1=addText(dist1,distance(glassA_old_points2_left, glassA_old_points5_left)-10,distance(glassA_old_points2_top, glassA_old_points5_top)+15);
+
+			var dist4=distance_entre_deux_points(glassA_old_points5_left,glassA_old_points6_left,glassA_old_points5_top,glassA_old_points6_top)+"";
+			line4 = makeLine([ glassA_old_points5_left+20, glassA_old_points5_top+3, glassA_old_points6_left+20, glassA_old_points6_top+3 ]);
+			text4=addText(dist4,distance(glassA_old_points5_left, glassA_old_points6_left)+10,distance(glassA_old_points5_top, glassA_old_points6_top));
+
+			var dist5=distance_entre_deux_points(glassA_old_points6_left,glassA_old_points1_left,glassA_old_points6_top,glassA_old_points1_top)+"";
+			line5 = makeLine([ glassA_old_points6_left+3, glassA_old_points6_top-20, glassA_old_points1_left+3, glassA_old_points1_top-20 ]);
+			text5=addText(dist5,distance(glassA_old_points6_left, glassA_old_points1_left),distance(glassA_old_points6_top, glassA_old_points1_top)-25);
+			canvas.add(line,line1,line4,line5);
+			canvas.add(text, text1, text4, text5);
+
+
+			removePoints();
+			canvas.remove(Polygon);
+			points1 = makeCircle(glassA_old_points1_left, glassA_old_points1_top, line,line1,null,null, line4,line5 );
+			points2 =    makeCircle(glassA_old_points2_left, glassA_old_points2_top, line,line1,null,null, line4,line5);
+			points5 =    makeCircle(glassA_old_points5_left,  glassA_old_points5_top , line,line1,null,null, line4,line5);
+			points5 =    makeCircle(glassA_old_points5_left,  glassA_old_points5_top, line,line1,null,null, line4,line5 );
+			points6 =   makeCircle(glassA_old_points6_left, glassA_old_points6_top, line,line1,null,null, line4,line5);
+			Polygon = addRectangleA_D_B(points1.left+3,points1.top+3,points2.left+3,points2.top+3,points5.left+3,points5.top+3,points6.left+3,points6.top+3);
+			canvas.add(Polygon);
+			canvas.add(
+					points1,
+					points2,
+					points5,
+					points6
+			);
+
+
+		}
+		function addB(){
+			test_part_c=false;
+			test_part_A=false;
+			test_part_B=true;
+			test_part_D=false;
+			removePoints();
+			canvas.remove(Polygon);
+			canvas.remove(text, text1, text2, text3, text4, text5);
+			canvas.remove(line,line1,line2,line3,line4,line5);
+			line = makeLine([ glassB_old_points1_left-20, glassB_old_points1_top+3, glassB_old_points2_left-20, glassB_old_points2_top+3 ]);
+			var dist=distance_entre_deux_points(glassB_old_points1_left,glassB_old_points2_left,glassB_old_points1_top,glassB_old_points2_top)+"";
+			text=addText(dist,distance(glassB_old_points1_left, glassB_old_points2_left)-30,distance(glassB_old_points1_top, glassB_old_points2_top)-10);
+			line1 = makeLine([ glassB_old_points2_left+3, glassB_old_points2_top+20, glassB_old_points5_left+3, glassB_old_points5_top+20 ]);
+			var dist1=distance_entre_deux_points(glassB_old_points2_left,glassB_old_points5_left,glassB_old_points2_top,glassB_old_points5_top)+"";
+			text1=addText(dist1,distance(glassB_old_points2_left, glassB_old_points5_left)-10,distance(glassB_old_points2_top, glassB_old_points5_top)+15);
+
+			var dist4=distance_entre_deux_points(glassB_old_points5_left,glassB_old_points6_left,glassB_old_points5_top,glassB_old_points6_top)+"";
+			line4 = makeLine([ glassB_old_points5_left+20, glassB_old_points5_top+3, glassB_old_points6_left+20, glassB_old_points6_top+3 ]);
+			text4=addText(dist4,distance(glassB_old_points5_left, glassB_old_points6_left)+10,distance(glassB_old_points5_top, glassB_old_points6_top));
+
+			var dist5=distance_entre_deux_points(glassB_old_points6_left,glassB_old_points1_left,glassB_old_points6_top,glassB_old_points1_top)+"";
+			line5 = makeLine([ glassB_old_points6_left+3, glassB_old_points6_top-20, glassB_old_points1_left+3, glassB_old_points1_top-20 ]);
+			text5=addText(dist5,distance(glassB_old_points6_left, glassB_old_points1_left),distance(glassB_old_points6_top, glassB_old_points1_top)-25);
+			canvas.add(line,line1,line4,line5);
+			canvas.add(text, text1, text4, text5);
+
+			points1 = makeCircle(glassB_old_points1_left, glassB_old_points1_top,line,line1,null,null, line4,line5 );
+					points2 =    makeCircle(glassB_old_points2_left, glassB_old_points2_top,line,line1,null,null, line4,line5);
+					points5 =    makeCircle(glassB_old_points5_left,  glassB_old_points5_top,line,line1,null,null, line4,line5 );
+					points6 =   makeCircle(glassB_old_points6_left, glassB_old_points6_top,line,line1,null,null, line4,line5);
+			Polygon = addRectangleA_D_B(points1.left+3,points1.top+3,points2.left+3,points2.top+3,points5.left+3,points5.top+3,points6.left+3,points6.top+3);
+			canvas.add(Polygon);
+			canvas.add(
+					points1,
+					points2,
+					points5,
+					points6
+			);
+		}
+		function distance(val1, val2){
+			if(val1>val2)
+				return (((val1-val2)/2)+val2);
+			else if(val1<val2)
+				return (((val2-val1)/2)+val1);
+			else if (val1== val2)
+				return val1;
+		}
+
+		function distance_entre_deux_points(x1,x2,y1,y2){
+			return (Math.sqrt(Math.pow(Math.abs((x1-x2)),2)+Math.pow(Math.abs((y1-y2)),2))/3).toFixed(1);
+		}
+		function addC(){
+			test_part_c=true;
+			test_part_A=false;
+			test_part_B=false;
+			test_part_D=false;
+			removePoints();
+			canvas.remove(Polygon);
+			canvas.remove(text, text1, text2, text3, text4, text5);
+			canvas.remove(line,line1,line2,line3,line4,line5);
+
+			line = makeLine([ glassC_old_points1_left-20, glassC_old_points1_top+3, glassC_old_points2_left-20, glassC_old_points2_top+3 ]);
+			var dist=distance_entre_deux_points(glassC_old_points1_left,glassC_old_points2_left,glassC_old_points1_top,glassC_old_points2_top)+"";
+			text=addText(dist,distance(glassC_old_points1_left, glassC_old_points2_left)-30,distance(glassC_old_points1_top, glassC_old_points2_top)-10);
+			line1 = makeLine([ glassC_old_points2_left+3, glassC_old_points2_top+20, glassC_old_points3_left+3, glassC_old_points3_top+20 ]);
+			var dist1=distance_entre_deux_points(glassC_old_points2_left,glassC_old_points3_left,glassC_old_points2_top,glassC_old_points3_top)+"";
+			text1=addText(dist1,distance(glassC_old_points2_left, glassC_old_points3_left)-10,distance(glassC_old_points2_top, glassC_old_points3_top)+15);
+			var dist2=distance_entre_deux_points(glassC_old_points3_left,glassC_old_points4_left,glassC_old_points3_top,glassC_old_points4_top)+"";
+			line2 = makeLine([ glassC_old_points3_left+20, glassC_old_points3_top+3, glassC_old_points4_left+20, glassC_old_points4_top+23 ]);
+			text2=addText(dist2,distance(glassC_old_points3_left, glassC_old_points4_left)+10,distance(glassC_old_points3_top, glassC_old_points4_top));
+			var dist3=distance_entre_deux_points(glassC_old_points4_left,glassC_old_points5_left,glassC_old_points4_top,glassC_old_points5_top)+"";
+			line3 = makeLine([ glassC_old_points4_left+23, glassC_old_points4_top+20, glassC_old_points5_left+3, glassC_old_points5_top+20 ]);
+			text3=addText(dist3,distance(glassC_old_points4_left, glassC_old_points5_left),distance(glassC_old_points4_top, glassC_old_points5_top)+15);
+			var dist4=distance_entre_deux_points(glassC_old_points5_left,glassC_old_points6_left,glassC_old_points5_top,glassC_old_points6_top)+"";
+			line4 = makeLine([ glassC_old_points5_left+20, glassC_old_points5_top+3, glassC_old_points6_left+20, glassC_old_points6_top+3 ]);
+			text4=addText(dist4,distance(glassC_old_points5_left, glassC_old_points6_left)+10,distance(glassC_old_points5_top, glassC_old_points6_top));
+
+			var dist5=distance_entre_deux_points(glassC_old_points6_left,glassC_old_points1_left,glassC_old_points6_top,glassC_old_points1_top)+"";
+			line5 = makeLine([ glassC_old_points6_left+3, glassC_old_points6_top-20, glassC_old_points1_left+3, glassC_old_points1_top-20 ]);
+			text5=addText(dist5,distance(glassC_old_points6_left, glassC_old_points1_left),distance(glassC_old_points6_top, glassC_old_points1_top)-25);
+			canvas.add(line,line1,line2,line3,line4,line5);
+			canvas.add(text, text1, text2, text3, text4, text5);
+
+			points1 = makeCircle(glassC_old_points1_left, glassC_old_points1_top, line,line1,line2,line3,line4,line5 );
+					points2 =    makeCircle(glassC_old_points2_left, glassC_old_points2_top, line,line1,line2,line3,line4,line5);
+					points3 =   makeCircle(glassC_old_points3_left, glassC_old_points3_top, line,line1,line2,line3,line4,line5 );
+					points4 =    makeCircle(glassC_old_points4_left, glassC_old_points4_top, line,line1,line2,line3,line4,line5);
+					points5 =    makeCircle(glassC_old_points5_left, glassC_old_points5_top, line,line1,line2,line3,line4,line5 );
+					points6 =   makeCircle(glassC_old_points6_left, glassC_old_points6_top, line,line1,line2,line3,line4,line5 );
+			Polygon=addPolygon(points1.left+3,points1.top+3,points2.left+3,points2.top+3,points3.left+3,points3.top+3,points4.left+3,points4.top+3,points5.left+3,points5.top+3,points6.left+3,points6.top+3)
+			canvas.add(Polygon);
+			canvas.add(
+					points1,
+					points2,
+					points3,
+					points4,
+					points5,
+					points6
+			);
+		}
+
+
+canvas.on('object:moving', function (e) {
+	var p = e.target;
+	if (test_part_c == true) {
+		canvas.remove(text, text1, text2, text3, text4, text5);
+		var dist=distance_entre_deux_points(points1.left,points2.left,points1.top,points2.top)+"";
+		text=addText(dist,distance(points1.left, points2.left)-30,distance(points1.top, points2.top)-10);
+		var dist1=distance_entre_deux_points(points2.left,points3.left,points2.top,points3.top)+"";
+		text1=addText(dist1,distance(points2.left, points3.left)-10,distance(points2.top, points3.top)+15);
+		var dist2=distance_entre_deux_points(points3.left,points4.left,points3.top,points4.top)+"";
+		text2=addText(dist2,distance(points3.left, points4.left)+10,distance(points3.top, points4.top));
+		var dist3=distance_entre_deux_points(points4.left,points5.left,points4.top,points5.top)+"";
+		text3=addText(dist3,distance(points4.left, points5.left),distance(points4.top, points5.top)+15);
+		var dist4=distance_entre_deux_points(points5.left,points6.left,points5.top,points6.top)+"";
+		text4=addText(dist4,distance(points5.left, points6.left)+10,distance(points5.top, points6.top));
+		var dist5=distance_entre_deux_points(points6.left,points1.left,points6.top,points1.top)+"";
+		text5=addText(dist5,distance(points6.left, points1.left),distance(points6.top, points1.top)-20);
+		canvas.add(text, text1, text2, text3, text4, text5);
+			p.line && p.line.set({ 'x1': points1.left-20, 'y1': points1.top+3, 'x2': points2.left-20, 'y2': points2.top+3 });
+            p.line1 && p.line1.set({ 'x1': points2.left+3, 'y1': points2.top+20, 'x2': points3.left+3, 'y2': points3.top+20 });
+            p.line2 && p.line2.set({  'x1': points3.left+20, 'y1': points3.top+3,'x2': points4.left+20, 'y2': points4.top+23 });
+            p.line3 && p.line3.set({ 'x1': points4.left+23, 'y1': points4.top+20, 'x2': points5.left+3, 'y2': points5.top+20 });
+            p.line4 && p.line4.set({ 'x1': points5.left+20, 'y1': points5.top+3, 'x2': points6.left+20, 'y2': points6.top+3 });
+            p.line5 && p.line5.set({ 'x1': points6.left+3, 'y1': points6.top-20, 'x2': points1.left+3, 'y2': points1.top-20 });
+
+		if (points1.left > 0 && points2.left > 0 && points3.left > 0 && points4.left > 0 && points5.left > 0 && points6.left > 0) {
+
+
+			canvas.remove(Polygon);
+			Polygon=addPolygon(points1.left + 3, points1.top + 3, points2.left + 3, points2.top + 3, points3.left + 3, points3.top + 3, points4.left + 3, points4.top + 3, points5.left + 3, points5.top + 3, points6.left + 3, points6.top + 3)
+			canvas.add(Polygon);
+			removePoints();
+			canvas.add(
+					points1,
+					points2,
+					points3,
+					points4,
+					points5,
+					points6
+			);
+		}
+	} else if (test_part_A == true || test_part_B == true || test_part_D == true) {
+
+		canvas.remove(text, text1, text2, text3, text4, text5);
+		var dist=distance_entre_deux_points(points1.left,points2.left,points1.top,points2.top)+"";
+		text=addText(dist,distance(points1.left, points2.left)-30,distance(points1.top, points2.top)-10);
+		var dist1=distance_entre_deux_points(points2.left,points5.left,points2.top,points5.top)+"";
+		text1=addText(dist1,distance(points2.left, points5.left)-10,distance(points2.top, points5.top)+15);
+
+		var dist4=distance_entre_deux_points(points5.left,points6.left,points5.top,points6.top)+"";
+		text4=addText(dist4,distance(points5.left, points6.left)+10,distance(points5.top, points6.top));
+		var dist5=distance_entre_deux_points(points6.left,points1.left,points6.top,points1.top)+"";
+		text5=addText(dist5,distance(points6.left, points1.left),distance(points6.top, points1.top)-20);
+		canvas.add(text, text1, text4, text5);
+		p.line && p.line.set({ 'x1': points1.left-20, 'y1': points1.top+3, 'x2': points2.left-20, 'y2': points2.top+3 });
+		p.line1 && p.line1.set({ 'x1': points2.left+3, 'y1': points2.top+20, 'x2': points5.left+3, 'y2': points5.top+20 });
+
+		p.line4 && p.line4.set({ 'x1': points5.left+20, 'y1': points5.top+3, 'x2': points6.left+20, 'y2': points6.top+3 });
+		p.line5 && p.line5.set({ 'x1': points6.left+3, 'y1': points6.top-20, 'x2': points1.left+3, 'y2': points1.top-20 });
+
+
+		if (points1.left > 0 && points2.left > 0 && points5.left > 0 && points6.left > 0) {
+			canvas.remove(Polygon);
+			Polygon=addRectangleA_D_B(points1.left + 3, points1.top + 3, points2.left + 3, points2.top + 3, points5.left + 3, points5.top + 3, points6.left + 3, points6.top + 3)
+			canvas.add(Polygon);
+			removePoints();
+			canvas.add(
+					points1,
+					points2,
+					points5,
+					points6
+			);
+
+		}
+	}
+
+
+	canvas.renderAll();
+	// p.line1.setCoords();
+
+});
+var divleft=60;
+var divtop=30;
+
+function add_hardware(){
+
+	if(test_part_c==true){
+		for (var i=0; i<glassC_point1.length; i++) {
+			glassC_point1[i].y +=(glassC_old_points1_top-(points1.top))/divtop;
+			glassC_point1[i].z +=(glassC_old_points1_left-(points1.left))/divleft;
+			//
+			glassC_point2[i].y +=(glassC_old_points2_top-(points2.top))/divtop;
+			glassC_point2[i].z +=(glassC_old_points2_left-(points2.left))/divleft;
+			//
+			var diff=(glassC_pointBetween_p1_p6[i].z-0.5)/(glassC_point1[i].z);
+			var diff1=(glassC_point1[i].y-0.5)/(glassC_pointBetween_p1_p2[i].y);
+			var diff2=(glassC_pointBetween_p1_p2[i].y)/(glassC_point2[i].y+0.2);
+			/*console.log(glassC_pointBetween_p1_p2[i].y);
+			console.log(glassC_point2[i].y);
+			console.log(diff2);*/
+			//
+			glassC_pointBetween_p1_p6[i].y +=(glassC_old_points1_top-(points1.top))/(divtop*(diff));
+			//
+			glassC_pointBetween_p1_p2[i].z +=(glassC_old_points1_left-(points1.left))/(divleft*diff1);
+			glassC_pointBetween_p1_p2[i].z +=(glassC_old_points2_left-(points2.left))/(divleft*2);
+			//
+			glassC_point3[i].y +=(glassC_old_points3_top-(points3.top))/divtop;
+			glassC_point3[i].z +=(glassC_old_points3_left-(points3.left))/divleft;
+			//
+			glassC_point4[i].y +=(glassC_old_points4_top-(points4.top))/divtop;
+			glassC_point4[i].z +=(glassC_old_points4_left-(points4.left))/divleft;
+			//
+			glassC_point5[i].y +=(glassC_old_points5_top-(points5.top))/divtop;
+			glassC_point5[i].z +=(glassC_old_points5_left-(points5.left))/divleft;
+			//
+			glassC_point6[i].y +=(glassC_old_points6_top-(points6.top))/divtop;
+			glassC_point6[i].z +=(glassC_old_points6_left-(points6.left))/divleft;
+		}
+
+
+		glassC_old_points1_left=(points1.left);
+		glassC_old_points1_top=(points1.top);
+		glassC_old_points2_left=(points2.left);
+		glassC_old_points2_top=(points2.top);
+		glassC_old_points3_left=(points3.left);
+		glassC_old_points3_top=(points3.top);
+		glassC_old_points4_left=(points4.left);
+		glassC_old_points4_top=(points4.top);
+		glassC_old_points5_left=(points5.left);
+		glassC_old_points5_top=(points5.top);
+		glassC_old_points6_left=(points6.left);
+		glassC_old_points6_top=(points6.top);
+
+
+	}
+	if(test_part_D==true){
+
+		for (var i=0; i<glassD_point1.length; i++) {
+			glassD_point1[i].y +=(glassD_old_points1_top-(points1.top))/divtop;
+			glassD_point1[i].x +=(glassD_old_points1_left-(points1.left))/divleft;
+			//
+			glassD_point2[i].y +=(glassD_old_points2_top-(points2.top))/divtop;
+			glassD_point2[i].x +=(glassD_old_points2_left-(points2.left))/divleft;
+			//
+			//console.log(glassD_point3);
+			glassD_point3[i].y +=(glassD_old_points5_top-(points5.top))/divtop;
+			glassD_point3[i].x +=(glassD_old_points5_left-(points5.left))/divleft;
+			//
+			glassD_point4[i].y +=(glassD_old_points6_top-(points6.top))/divtop;
+			glassD_point4[i].x +=(glassD_old_points6_left-(points6.left))/divleft;
+		}
+		glassD_old_points1_left=(points1.left);
+		glassD_old_points1_top=(points1.top);
+
+		glassD_old_points2_left=(points2.left);
+		glassD_old_points2_top=(points2.top);
+
+		glassD_old_points5_left=(points5.left);
+		glassD_old_points5_top=(points5.top);
+
+		glassD_old_points6_left=(points6.left);
+		glassD_old_points6_top=(points6.top);
+
+	}
+
+	if(test_part_B==true){
+		console.log("aaaaaaaaaaa"+test_part_B);
+
+		for (var i=0; i<glassB_point1.length; i++) {
+			glassB_point1[i].y +=(glassB_old_points1_top-(points1.top))/divtop;
+			glassB_point1[i].z +=(glassB_old_points1_left-(points1.left))/divleft;
+			//
+			glassB_point2[i].y +=(glassB_old_points2_top-(points2.top))/divtop;
+			glassB_point2[i].z +=(glassB_old_points2_left-(points2.left))/divleft;
+			//
+			//console.log(glassD_point3);
+			glassB_point3[i].y +=(glassB_old_points5_top-(points5.top))/divtop;
+			glassB_point3[i].z +=(glassB_old_points5_left-(points5.left))/divleft;
+			//
+			glassB_point4[i].y +=(glassB_old_points6_top-(points6.top))/divtop;
+			glassB_point4[i].z +=(glassB_old_points6_left-(points6.left))/divleft;
+		}
+		glassB_old_points1_left=(points1.left);
+		glassB_old_points1_top=(points1.top);
+
+		glassB_old_points2_left=(points2.left);
+		glassB_old_points2_top=(points2.top);
+
+		glassB_old_points5_left=(points5.left);
+		glassB_old_points5_top=(points5.top);
+
+		glassB_old_points6_left=(points6.left);
+		glassB_old_points6_top=(points6.top);
+
+	}
+
+	if(test_part_A==true){
+		for (var i=0; i<glassA_point1.length; i++) {
+			glassA_point1[i].y +=(glassA_old_points1_top-(points1.top))/divtop;
+			glassA_point1[i].z +=(glassA_old_points1_left-(points1.left))/divleft;
+			//
+			glassA_point2[i].y +=(glassA_old_points2_top-(points2.top))/divtop;
+			glassA_point2[i].z +=(glassA_old_points2_left-(points2.left))/divleft;
+			//
+			//console.log(glassD_point3);
+			glassA_point3[i].y +=(glassA_old_points5_top-(points5.top))/divtop;
+			glassA_point3[i].z +=(glassA_old_points5_left-(points5.left))/divleft;
+			//
+			glassA_point4[i].y +=(glassA_old_points6_top-(points6.top))/divtop;
+			glassA_point4[i].z +=(glassA_old_points6_left-(points6.left))/divleft;
+		}
+		glassA_old_points1_left=(points1.left);
+		glassA_old_points1_top=(points1.top);
+
+		glassA_old_points2_left=(points2.left);
+		glassA_old_points2_top=(points2.top);
+
+		glassA_old_points5_left=(points5.left);
+		glassA_old_points5_top=(points5.top);
+
+		glassA_old_points6_left=(points6.left);
+		glassA_old_points6_top=(points6.top);
+
+	}
+
+	scene.children[4].traverse( function ( child ) {
+		if ( child instanceof THREE.Mesh ) {
+
+			for (var i=0; i<child.geometry.vertices.length; i++) {
+			child.geometry.verticesNeedUpdate = true;
+			}
+
+		}
+	});
+	scene.children[5].traverse( function ( child ) {
+		if ( child instanceof THREE.Mesh ) {
+
+			for (var i=0; i<child.geometry.vertices.length; i++) {
+				child.geometry.verticesNeedUpdate = true;
+
+			}
+
+		}
+	});scene.children[6].traverse( function ( child ) {
+		if ( child instanceof THREE.Mesh ) {
+
+			for (var i=0; i<child.geometry.vertices.length; i++) {
+				child.geometry.verticesNeedUpdate = true;
+
+			}
+
+		}
+	});
+	scene.children[7].traverse( function ( child ) {
+		if ( child instanceof THREE.Mesh ) {
+
+			for (var i=0; i<child.geometry.vertices.length; i++) {
+				child.geometry.verticesNeedUpdate = true;
+
+			}
+
+		}
+	});
+}
+
+
+</script>
+</body>
+
+</html> 
